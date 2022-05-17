@@ -1,0 +1,6 @@
+2022/04/08-13:43:04.692 7f6 Creating DB /home/soliprem/.config/Vieb/Partitions/main/IndexedDB/https_mail.google.com_0.indexeddb.leveldb since it was missing.
+2022/04/08-13:43:04.706 7f6 Reusing MANIFEST /home/soliprem/.config/Vieb/Partitions/main/IndexedDB/https_mail.google.com_0.indexeddb.leveldb/MANIFEST-000001
+2022/04/08-17:00:21.172 c4c Level-0 table #5: started
+2022/04/08-17:00:21.189 c4c Level-0 table #5: 975998 bytes OK
+2022/04/08-17:00:21.192 c4c Delete type=0 #3
+2022/04/08-17:00:21.193 c4c Manual compaction at level-0 from (begin) .. (end); will stop at (end)

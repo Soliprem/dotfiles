@@ -1,0 +1,22 @@
+{
+	"all": {
+		"changeLogs": {
+			"BDFDB": "2.2.4",
+			"EmojiStatistics": "2.9.8",
+			"ImageUtilities": "4.7.1"
+		},
+		"choices": {
+			"toastPosition": "right"
+		},
+		"general": {
+			"shareData": true,
+			"showToasts": true,
+			"showSupportBadges": true,
+			"useChromium": false
+		},
+		"hashes": {
+			"0BDFDB.data.json": "4c29df47c8dee3140c64089d30c13b5ecd96e759",
+			"0BDFDB.raw.css": "e8d30d44e567f6a77ef4e90734c27c2b47306d20"
+		}
+	}
+}
