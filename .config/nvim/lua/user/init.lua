@@ -124,6 +124,7 @@ local config = {
     register_mappings = {
       -- first key is the mode, n == normal mode
       n = {
+        ["<esc>"] = {"<cmd>noh<cr>", "remove highlights after search"},
         -- second key is the prefix, <leader> prefixes
         ["<leader>"] = {
           -- which-key registration table for normal mode, leader prefix
