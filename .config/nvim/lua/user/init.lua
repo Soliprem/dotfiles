@@ -59,6 +59,7 @@ local config = {
     -- Add plugins, the packer syntax without the "use"
     init = {
       'vimwiki/vimwiki',
+      'lervag/vimtex',
       -- You can disable default plugins as follows:
       -- ["goolord/alpha-nvim"] = { disable = true },
 
