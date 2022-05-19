@@ -1,5 +1,4 @@
 return {
-  "clangd",
   "cmake",
   "cssls",
   "html",

@@ -8,6 +8,15 @@ vim.api.nvim_create_autocmd("VimLeave", {
   end,
 })
 
+vim.api.nvim_create_augroup("TexClean", { clear = true })
+vim.api.nvim_create_autocmd("VimLeave", {
+  desc = "Clean tex files on vimexit",
+  group = "TexClean",
+  pattern = "latex",
+  callback = function()
+    vim.fn.jobstart { "latex-clean" }
+  end,
+})
 vim.api.nvim_create_augroup("dapui", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   desc = "Make q close dap floating windows",
