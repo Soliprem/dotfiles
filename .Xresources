@@ -1,0 +1,47 @@
+!... all target ~/.Xresources
+!... main begin
+!... main hash 58592B36BBA7940A1A074CEDA495764716B8AF91C53422C59401D902A348BA3C
+
+URxvt.scrollBar: false
+URxvt.perl-ext-common: resize-font
+Xcursor.size: 16
+
+*.background: #383c4a
+*.foreground: #D2D2D2
+
+!black
+*color0: #282c34
+*color8: #545862
+
+!red
+*color1: #e06c75
+*color9: #e06c75
+
+!green
+*color2: #98c379
+*color10: #98c379
+
+!yellow
+*color3: #e5c07b
+*color11: #e5c07b
+
+!blue
+*color4: #61afef
+*color12: #61afef
+
+!magenta
+*color5: #c678dd
+*color13: #c678dd
+
+!cyan
+*color6: #56b6c2
+*color14: #56b6c2
+
+!white
+*color7: #abb2bf
+*color15: #c8ccd4
+
+URxvt.font: xft:Fira Code Nerd Font Mono:size=13
+
+!... main end
+
