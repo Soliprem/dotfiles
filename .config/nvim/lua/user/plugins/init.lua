@@ -155,4 +155,5 @@ return {
       vim.g.vimwiki_list = { { path = "~/notes/vimwiki", syntax = "markdown", ext = ".md" } }
     end,
   },
+  "davidgranstrom/nvim-markdown-preview",
 }
