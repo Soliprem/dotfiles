@@ -1,5 +1,6 @@
 return function()
   require("mini.bufremove").setup()
+  require("mini.starter").setup()
   require("mini.comment").setup()
   require("mini.jump").setup()
   require("mini.surround").setup()

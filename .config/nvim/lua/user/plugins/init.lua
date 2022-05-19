@@ -5,11 +5,6 @@ return {
   ["lukas-reineke/indent-blankline.nvim"] = { disable = true },
   ["max397574/better-escape.nvim"] = { disable = true },
   ["numToStr/Comment.nvim"] = { disable = true },
-  ["EdenEast/nightfox.nvim"] = {
-    config = function()
-      require("nightfox").setup(require "user.plugins.nightfox")
-    end,
-  },
   ["danymat/neogen"] = {
     module = "neogen",
     cmd = "Neogen",
@@ -78,19 +73,12 @@ return {
     module = "dap",
     config = require "user.plugins.dap",
   },
-  ["mickael-menu/zk-nvim"] = {
-    module = { "zk", "zk.commands" },
-    config = function()
-      require("zk").setup(require "user.plugins.zk")
-    end,
-  },
   ["mtikekar/nvim-send-to-term"] = {
     cmd = "SendHere",
     config = function()
       vim.g.send_disable_mapping = true
     end,
   },
-  ["nanotee/sqls.nvim"] = { module = "sqls" },
   ["phaazon/hop.nvim"] = {
     cmd = { "HopChar1", "HopChar2", "HopLine", "HopPattern", "HopWord" },
     branch = "v1",
