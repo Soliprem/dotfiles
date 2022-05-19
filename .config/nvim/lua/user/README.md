@@ -1,6 +1,7 @@
 # AstroNvim User Configuration
 
-My personal user config for AstroVim
+This is a fork of mehalter's configuration. Follow the installation instructions fro his config 
+(the second link, if followed, will bring you to his git website)
 
 ## Installation
 
