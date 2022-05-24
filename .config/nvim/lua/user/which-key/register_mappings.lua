@@ -2,8 +2,9 @@ local utils = require "user.utils"
 
 return {
   n = {
-    ["<esc>"] = {":noh<cr>", "remove highlight"},
+    ["<esc>"] = { ":noh<cr>", "remove highlight" },
     ["<leader>"] = {
+      r = { ":%s//g<Left><Left>", "replace all ''" },
       ["c"] = {
         function()
           MiniBufremove.delete()
@@ -15,7 +16,7 @@ return {
       ["H"] = { "<cmd>set hlsearch!<cr>", "Toggle Highlight" },
       ["<cr>"] = { '<esc>/<++><cr>"_c4l', "Next Template" },
       ["z"] = { "<cmd>ZenMode<cr>", "Zen Mode" },
-      ["r"] = { "<cmd>SendHere<cr>", "Set REPL" },
+      ["R"] = { "<cmd>SendHere<cr>", "Set REPL" },
       ["."] = { "<cmd>cd %:p:h<cr>", "Set CWD" },
 
       a = {

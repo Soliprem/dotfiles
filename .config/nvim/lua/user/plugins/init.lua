@@ -156,4 +156,5 @@ return {
     end,
   },
   "davidgranstrom/nvim-markdown-preview",
+  "ellisonleao/gruvbox.nvim",
 }

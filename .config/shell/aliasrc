@@ -13,6 +13,7 @@ done; unset command
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
+	river="XKB_DEFAULT_LAYOUT=it river"
 	cp="cp -iv" \
 	nnn="nnn -e" \
 	mv="mv -iv" \
@@ -41,8 +42,8 @@ alias \
 	trem="transmission-remote" \
 	YT="youtube-viewer" \
 	sdn="shutdown -h now" \
-	e="$EDITOR" \
-	v="$EDITOR" \
+	e="nvim" \
+	v="nvim" \
 	p="pacman" \
 	xi="sudo xbps-install" \
 	xr="sudo xbps-remove -R" \
