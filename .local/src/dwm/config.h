@@ -16,13 +16,22 @@ static int smartgaps          = 0;        /* 1 means no outer gap when there is 
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar= 1;        /* 0 means bottom bar */
 static char *fonts[]          = { "monospace:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true"  };
+/* gruvbox */
+static char normbgcolor[]           = "#282828";
+static char normbordercolor[]       = "#282828";
+static char normfgcolor[]           = "#7c6f64";
+static char selfgcolor[]            = "#ebdbb2";
+static char selbordercolor[]        = "#cc241d";
+static char selbgcolor[]            = "#458588";
+static char *colors[][3] = {
+/* OneDark
 static char normbgcolor[]           = "#1E1D2F";
 static char normbordercolor[]       = "#1E1D2F";
 static char normfgcolor[]           = "#6E6C7E";
 static char selfgcolor[]            = "#D9E0EE";
 static char selbordercolor[]        = "#96CDFB";
-static char selbgcolor[]            = "#1E1D2F";
-static char *colors[][3] = {
+static char selbgcolor[]            = "#1E1D2F";*/
+
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },

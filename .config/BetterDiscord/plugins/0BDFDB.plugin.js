@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.3.8
+ * @version 2.3.9
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -19,7 +19,7 @@ module.exports = (_ => {
 		"info": {
 			"name": "BDFDB",
 			"author": "DevilBro",
-			"version": "2.3.8",
+			"version": "2.3.9",
 			"description": "Required Library for DevilBro's Plugins"
 		},
 		"rawUrl": "https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js"
@@ -2239,7 +2239,7 @@ module.exports = (_ => {
 				config.name = config.subComponent && config.subComponent.name || config.mappedType.split(" _ _ ")[0];
 				
 				let component = InternalData.ModuleUtilsConfig.LoadedInComponents[type] && BDFDB.ObjectUtils.get(Internal, InternalData.ModuleUtilsConfig.LoadedInComponents[type]);
-				if (component) Internal.patchComponent(pluginData, config.nonRender ? (BDFDB.ModuleUtils.find(m => m == component && m, {useExport: config.exported}) || {}).exports : component, type, config);
+				if (component) Internal.patchComponent(pluginData, config.nonRender ? (BDFDB.ModuleUtils.find(m => m == component && m, {useExport: config.exported}) || {}).exports : component, config);
 				else {
 					if (config.mapped) for (let patchType in plugin.patchedModules) if (plugin.patchedModules[patchType][type]) {
 						plugin.patchedModules[patchType][config.mappedType] = plugin.patchedModules[patchType][type];
@@ -9146,17 +9146,11 @@ module.exports = (_ => {
 							})
 						}),
 						onClick: _ => {
-							let loadingString = `${BDFDB.LanguageUtils.LanguageStrings.CHECKING_FOR_UPDATES} - ${BDFDB.LanguageUtils.LibraryStrings.please_wait}`;
-							let currentLoadingString = loadingString;
-							let toastInterval, toast = BDFDB.NotificationUtils.toast(loadingString, {
+							let toast = BDFDB.NotificationUtils.toast(`${BDFDB.LanguageUtils.LanguageStrings.CHECKING_FOR_UPDATES} - ${BDFDB.LanguageUtils.LibraryStrings.please_wait}`, {
 								type: "info",
 								timeout: 0,
-								onClose: _ => BDFDB.TimeUtils.clear(toastInterval)
+								ellipsis: true
 							});
-							toastInterval = BDFDB.TimeUtils.interval(_ => {
-								currentLoadingString = currentLoadingString.endsWith(".....") ? loadingString : currentLoadingString + ".";
-								toast.update(currentLoadingString);
-							}, 500);
 							BDFDB.PluginUtils.checkAllUpdates().then(outdated => {
 								toast.close();
 								if (outdated > 0) BDFDB.NotificationUtils.toast(BDFDB.LanguageUtils.LibraryStringsFormat("update_check_complete_outdated", outdated), {

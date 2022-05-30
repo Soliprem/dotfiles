@@ -152,7 +152,7 @@ return {
   ["ziontee113/syntax-tree-surfer"] = { module = "syntax-tree-surfer" },
   ["vimwiki/vimwiki"] = {
     config = function()
-      vim.g.vimwiki_list = { { path = "~/notes/vimwiki", syntax = "markdown", ext = ".md" } }
+      vim.g.vimwiki_list = { { path = "~/notes/wiki", syntax = "markdown", ext = ".md" } }
     end,
   },
   "davidgranstrom/nvim-markdown-preview",
