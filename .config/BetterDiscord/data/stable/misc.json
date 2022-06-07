@@ -3,9 +3,11 @@
     "emoteVersion": "v1.5.3",
     "drawerStates": {
         "settings": {
-            "addons": false,
-            "customcss": false,
-            "developer": false
+            "addons": true,
+            "customcss": true,
+            "developer": true,
+            "editor": true,
+            "window": false
         }
     }
 }

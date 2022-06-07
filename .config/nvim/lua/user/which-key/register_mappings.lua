@@ -4,7 +4,7 @@ return {
   n = {
     ["<esc>"] = { ":noh<cr>", "remove highlight" },
     ["<leader>"] = {
-      r = { ":%s//g<Left><Left>", "replace all ''" },
+      r = { ":%s///g<Left><Left><Left>", "replace all ''" },
       ["c"] = {
         function()
           MiniBufremove.delete()

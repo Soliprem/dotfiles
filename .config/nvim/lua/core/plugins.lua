@@ -116,11 +116,12 @@ local astro_plugins = {
   },
 
   -- Snippet collection
-  ["rafamadriz/friendly-snippets"] = { event = "InsertEnter" },
+  ["rafamadriz/friendly-snippets"] = { opt = true },
 
   -- Snippet engine
   ["L3MON4D3/LuaSnip"] = {
-    after = "friendly-snippets",
+    module = "luasnip",
+    wants = "friendly-snippets",
     config = function()
       require("configs.luasnip").config()
     end,
@@ -128,7 +129,7 @@ local astro_plugins = {
 
   -- Completion engine
   ["hrsh7th/nvim-cmp"] = {
-    after = "LuaSnip",
+    event = "InsertEnter",
     config = function()
       require("configs.cmp").config()
     end,
@@ -205,13 +206,11 @@ local astro_plugins = {
   },
 
   -- Fuzzy finder syntax support
-  ["nvim-telescope/telescope-fzf-native.nvim"] = {
+  [("nvim-telescope/telescope-%s-native.nvim"):format(vim.fn.has "win32" == 1 and "fzy" or "fzf")] = {
     after = "telescope.nvim",
-    run = vim.fn.has "win32" == 1
-        and "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build"
-      or "make",
+    run = vim.fn.has "win32" ~= 1 and "make" or nil,
     config = function()
-      require("telescope").load_extension "fzf"
+      require("telescope").load_extension(vim.fn.has "win32" == 1 and "fzy_native" or "fzf")
     end,
   },
 

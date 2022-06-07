@@ -16,11 +16,14 @@
     "BetterMessageLinks": true,
     "BetterInvites": true,
     "UrbanDictionary": true,
-    "AvatarsEverywhere": true,
+    "AvatarsEverywhere": false,
     "ImageUtilities": true,
     "TypingUsersAvatars": false,
     "TypingIndicator": true,
     "BugReportHelper": true,
     "Zalgo": true,
-    "ThemeSettings": true
+    "ThemeSettings": true,
+    "ReadAllNotificationsButton": true,
+    "AccountDetailsPlus": true,
+    "BetterCodeblocks": true
 }
