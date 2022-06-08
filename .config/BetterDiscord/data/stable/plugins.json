@@ -10,7 +10,7 @@
     "Freemoji": true,
     "QuickView": false,
     "BetterFormattingRedux": true,
-    "CustomQuoter": false,
+    "CustomQuoter": true,
     "RoleMentionIcons": true,
     "ChannelsPreview": true,
     "BetterMessageLinks": true,
