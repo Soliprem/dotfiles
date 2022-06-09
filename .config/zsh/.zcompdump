@@ -1,4 +1,4 @@
-#files: 836	version: 5.9
+#files: 811	version: 5.9
 
 _comps=(
 '-' '_precommand'
@@ -24,8 +24,6 @@ _comps=(
 'add-zle-hook-widget' '_add-zle-hook-widget'
 'add-zsh-hook' '_add-zsh-hook'
 'admin' '_sccs'
-'ag' '_the_silver_searcher'
-'alacritty' '_alacritty'
 'ali' '_mh'
 'alias' '_alias'
 'amaya' '_webbrowser'
@@ -52,7 +50,6 @@ _comps=(
 'appletviewer' '_java'
 'apropos' '_man'
 'apvlv' '_pdf'
-'arch-chroot' '_archinstallscripts'
 'arduino-ctags' '_ctags'
 'arecord' '_alsa-utils'
 'arena' '_webbrowser'
@@ -91,7 +88,6 @@ _comps=(
 'bibtex' '_bibtex'
 'bindkey' '_bindkey'
 'bison' '_bison'
-'bluetoothctl' '_bluetoothctl'
 'bmake' '_make'
 'bogofilter' '_bogofilter'
 'bogotune' '_bogofilter'
@@ -126,7 +122,6 @@ _comps=(
 'bunzip2' '_bzip2'
 'burst' '_mh'
 'busctl' '_busctl'
-'bwrap' '_bwrap'
 'bzcat' '_bzip2'
 'bzegrep' '_grep'
 'bzfgrep' '_grep'
@@ -182,7 +177,6 @@ _comps=(
 'cmp' '_cmp'
 'co' '_rcs'
 'code' '_code'
-'colorscript' '_colorscript'
 'column' '_column'
 'comb' '_sccs'
 'combine' '_imagemagick'
@@ -285,7 +279,6 @@ _comps=(
 'dvitodvi' '_dvi'
 'dvitype' '_dvi'
 'dwb' '_webbrowser'
-'dym' '_dym'
 'e2label' '_e2label'
 'eatmydata' '_precommand'
 'ecasound' '_ecasound'
@@ -367,8 +360,6 @@ _comps=(
 'fold' '_fold'
 'folder' '_mh'
 'folders' '_mh'
-'foot' '_foot'
-'footclient' '_footclient'
 'fortune' '_fortune'
 'forw' '_mh'
 'fprev' '_mh'
@@ -410,7 +401,6 @@ _comps=(
 'geany' '_geany'
 'gegrep' '_grep'
 'gem' '_gem'
-'genfstab' '_archinstallscripts'
 'genisoimage' '_genisoimage'
 'genv' '_env'
 'get' '_sccs'
@@ -590,7 +580,6 @@ _comps=(
 'hostnamectl' '_hostnamectl'
 'hotjava' '_webbrowser'
 'htop' '_htop'
-'hyperfine' '_hyperfine'
 'iceweasel' '_mozilla'
 'icombine' '_ispell'
 'iconv' '_iconv'
@@ -672,7 +661,6 @@ _comps=(
 'ldd' '_ldd'
 'less' '_less'
 'let' '_math'
-'lf' '_lf'
 'lftp' '_ncftp'
 'lha' '_lha'
 'libinput' '_libinput'
@@ -758,7 +746,6 @@ _comps=(
 'mencal' '_mencal'
 'mere' '_mere'
 'merge' '_rcs'
-'meson' '_meson'
 'metaflac' '_flac'
 'mformat' '_mtools'
 'mgv' '_pspdf'
@@ -852,7 +839,6 @@ _comps=(
 'ngrep' '_ngrep'
 'nice' '_nice'
 'nim' '_nim'
-'ninja' '_ninja'
 'nkf' '_nkf'
 'nl' '_nl'
 'nm' '_nm'
@@ -872,8 +858,6 @@ _comps=(
 'ntalk' '_other_accounts'
 'numfmt' '_numfmt'
 'nvim' '_vim'
-'_nvme' '_nvme'
-'nvme' '_nvme'
 'objdump' '_objdump'
 'od' '_od'
 'ogg123' '_vorbis'
@@ -900,7 +884,6 @@ _comps=(
 'pacman-key' '_pacman'
 'pacman.static' '_pacman'
 'pacmd' '_pulseaudio'
-'pacstrap' '_archinstallscripts'
 'pactl' '_pulseaudio'
 'padsp' '_pulseaudio'
 'pandoc' '_pandoc'
@@ -959,11 +942,9 @@ _comps=(
 'ping6' '_ping'
 'pkgadd' '_pkgadd'
 'pkg-config' '_pkg-config'
-'pkgfile' '_pkgfile'
 'pkginfo' '_pkginfo'
 'pkgrm' '_pkgrm'
 'pkill' '_pgrep'
-'playerctl' '_playerctl'
 'pldd' '_pids'
 'pmake' '_make'
 'pman' '_perl_modules'
@@ -1073,12 +1054,10 @@ _comps=(
 'resolvectl' '_resolvectl'
 'restart' '_initctl'
 'retawq' '_webbrowser'
-'rg' '_rg'
 'rgrep' '_grep'
 'rgview' '_vim'
 'rgvim' '_vim'
 'ri' '_ri'
-'riverctl' '_riverctl'
 'rlogin' '_rlogin'
 'rm' '_rm'
 'rmd160' '_cksum'
@@ -1103,7 +1082,6 @@ _comps=(
 'run-help' '_run-help'
 'rup' '_hosts'
 'rusage' '_precommand'
-'rustup' '_rustup'
 'rview' '_vim'
 'rvim' '_vim'
 'rwho' '_hosts'
@@ -1222,7 +1200,6 @@ _comps=(
 'svnliteadmin' '_subversion'
 'swaks' '_swaks'
 'swanctl' '_swanctl'
-'swaylock' '_swaylock'
 'swift' '_swift'
 'swiftc' '_swift'
 'sync' '_nothing'
@@ -1277,7 +1254,6 @@ _comps=(
 'tkconch' '_twisted'
 'tkinfo' '_texinfo'
 'tla' '_tla'
-'tldr' '_tldr'
 'tload' '_tload'
 'tmux' '_tmux'
 'todo' '_devtodo'
@@ -1450,8 +1426,6 @@ _comps=(
 'whom' '_mh'
 'wiggle' '_wiggle'
 'wipefs' '_wipefs'
-'wl-copy' '_wl-copy'
-'wl-paste' '_wl-paste'
 'wodim' '_cdrecord'
 'wpa_cli' '_wpa_cli'
 'write' '_users_on'
@@ -1512,7 +1486,6 @@ _comps=(
 'xzcat' '_xz'
 'yafc' '_yafc'
 'yash' '_sh'
-'yay' '_yay'
 'ypbind' '_yp'
 'ypcat' '_yp'
 'ypmatch' '_yp'
@@ -1560,7 +1533,6 @@ _comps=(
 'zmodload' '_zmodload'
 'zmv' '_zmv'
 'zone' '_hosts'
-'zoxide' '_zoxide'
 'zparseopts' '_zparseopts'
 'zpool' '_zfs'
 'zpty' '_zpty'
@@ -1689,21 +1661,16 @@ bindkey '^[,' _history-complete-newer
 bindkey '^[/' _history-complete-older
 bindkey '^[~' _bash_complete-word
 
-autoload -Uz _alacritty _archinstallscripts _bat _bluetoothctl _bootctl \
-            _busctl _bwrap _cargo _colorscript _coredumpctl \
-            _curl _dym _email-notmuch _exa _fd \
-            _foot _footclient _hostnamectl _hyperfine _journalctl \
-            _kernel-install _lf _libinput _localectl _loginctl \
-            _machinectl _meson _mkinitcpio _mpv _networkctl \
-            _nim _ninja _nnn _notmuch _nvme \
-            _oomctl _pacman _paru _pass _pkgfile \
-            _playerctl _pulseaudio _resolvectl _rg _riverctl \
-            _rustup _sd_hosts_or_user_at_host _sd_machines _sd_outputmodes _sd_unit_files \
-            _swaylock _systemctl _systemd _systemd-analyze _systemd-delta \
-            _systemd-inhibit _systemd-nspawn _systemd-path _systemd-run _systemd-tmpfiles \
-            _the_silver_searcher _timedatectl _tldr _udevadm _vifm \
-            _wl-copy _wl-paste _xwallpaper _yay _yt-dlp \
-            _zathura _zoxide _cdr _all_labels _all_matches \
+autoload -Uz _bat _bootctl _busctl _cargo _coredumpctl \
+            _curl _email-notmuch _exa _fd _hostnamectl \
+            _journalctl _kernel-install _libinput _localectl _loginctl \
+            _machinectl _mkinitcpio _mpv _networkctl _nim \
+            _nnn _notmuch _oomctl _pacman _paru \
+            _pass _pulseaudio _resolvectl _sd_hosts_or_user_at_host _sd_machines \
+            _sd_outputmodes _sd_unit_files _systemctl _systemd _systemd-analyze \
+            _systemd-delta _systemd-inhibit _systemd-nspawn _systemd-path _systemd-run \
+            _systemd-tmpfiles _timedatectl _udevadm _vifm _xwallpaper \
+            _yt-dlp _zathura _cdr _all_labels _all_matches \
             _alternative _approximate _arg_compile _arguments _bash_completions \
             _cache_invalid _call_function _combination _complete _complete_debug \
             _complete_help _complete_help_generic _complete_tag _comp_locale _correct \
