@@ -19,15 +19,26 @@
 			"WhatAnime": true,
 			"Yandex": true
 		},
+		"general": {
+			"nsfwMode": true
+		},
 		"places": {
 			"userAvatars": true,
 			"groupIcons": true,
 			"guildIcons": true,
 			"emojis": true
 		},
+		"rescaleSettings": {
+			"messages": "NONE",
+			"imageViewer": "NONE"
+		},
 		"resizeSettings": {
 			"messages": false,
 			"imageViewer": false
+		},
+		"scaleSettings": {
+			"messages": "NONE",
+			"imageViewer": "NONE"
 		},
 		"viewerSettings": {
 			"zoomMode": true,
@@ -39,7 +50,7 @@
 		"zoomSettings": {
 			"lensSize": 200,
 			"pixelMode": false,
-			"zoomLevel": 2
+			"zoomLevel": 2.1
 		}
 	}
 }
