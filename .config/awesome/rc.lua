@@ -362,8 +362,7 @@ globalkeys = gears.table.join(
               {description = "open vimwiki", group = "custom"}),
     awful.key({ modkey,           }, "space", function () awful.spawn(Launcher) end,
               {description = "open a run launcher", group = "launcher"}),
-    awful.key({ modkey,           }, "d", function () awful.spawn("rofi -modi drun -show drun \
-		-config ~/.config/rofi/rofidmenu.rasi") end,
+    awful.key({ modkey,           }, "d", function () awful.spawn("rofi -show drun ") end,
               {description = "open rofi", group = "launcher"}),
     awful.key({		              }, "Print", function () awful.spawn("flameshot gui") end,
               {description = "launch flameshot", group = "launcher"}),

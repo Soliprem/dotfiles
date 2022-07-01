@@ -16,6 +16,7 @@ export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="firefox"
 export LOCATION="Staranzano"
+export MANPAGER="nvim -c 'Man!'"
 # export XKB_DEFAULT_OPTIONS=caps:swapescape
 
 # ~/ Clean-up:
