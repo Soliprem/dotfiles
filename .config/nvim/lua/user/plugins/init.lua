@@ -152,9 +152,22 @@ return {
   ["ziontee113/syntax-tree-surfer"] = { module = "syntax-tree-surfer" },
   ["vimwiki/vimwiki"] = {
     config = function()
-      vim.g.vimwiki_list = { { path = "~/vimwiki", syntax = "markdown", ext = ".md" } }
+      vim.g.vimwiki_list = { { path = "~/vimwiki", template_path = "~/vimwiki/templates/", template_default = "template", syntax = "markdown", template_ext= ".html", path_html = "~/.local/src/wiki2", custom_wiki2html = "vimwiki_markdown", ext = ".md"} }
     end,
   },
   "davidgranstrom/nvim-markdown-preview",
   "ellisonleao/gruvbox.nvim",
+  -- ["oberblastmeister/neuron.nvim"] = {
+  --   branch = "unstable",
+  --       -- these are all the default values
+  --   config = function()
+  --     require'neuron'.setup {
+  --       virtual_titles = true,
+  --       mappings = true,
+  --       run = nil, -- function to run when in neuron dir
+  --       neuron_dir = "~/vimwiki",
+  --       leader = "gz",
+  --   }
+  -- end
+  -- },
 }

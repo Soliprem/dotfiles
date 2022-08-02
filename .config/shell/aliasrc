@@ -34,6 +34,7 @@ alias \
 	nn="cd ~/.config/nvim/lua/user/ && ls" \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
+	mbsync="mbsync -c $XDG_CONFIG_HOME/isync/mbsyncrc" \
 	ccat="highlight --out-format=ansi" \
 	ip="ip -color=auto"
 

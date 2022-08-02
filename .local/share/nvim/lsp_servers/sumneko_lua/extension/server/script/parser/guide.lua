@@ -10,9 +10,11 @@ local type         = type
 ---@field type                  string
 ---@field special               string
 ---@field tag                   string
----@field args                  parser.object[]
+---@field args                  { [integer]: parser.object, start: integer, finish: integer }
 ---@field locals                parser.object[]
----@field returns               parser.object[]
+---@field returns?              parser.object[]
+---@field exps                  parser.object[]
+---@field keys                  parser.object
 ---@field uri                   uri
 ---@field start                 integer
 ---@field finish                integer
@@ -65,6 +67,8 @@ local type         = type
 ---@field hasGoTo?              true
 ---@field hasReturn?            true
 ---@field hasBreak?             true
+---@field hasError?             true
+---@field [integer]             parser.object|any
 ---@field _root                 parser.object
 
 ---@class guide
@@ -194,6 +198,43 @@ end
     return f
 end})
 
+local eachChildMap = setmetatable({}, {__index = function (self, name)
+    local defs = childMap[name]
+    if not defs then
+        self[name] = false
+        return false
+    end
+    local text = {}
+    text[#text+1] = 'local obj, callback = ...'
+    for _, def in ipairs(defs) do
+        if def == '#' then
+            text[#text+1] = [[
+for i = 1, #obj do
+    callback(obj[i])
+end
+]]
+        elseif type(def) == 'string' and def:sub(1, 1) == '#' then
+            local key = def:sub(2)
+            text[#text+1] = ([[
+local childs = obj.%s
+if childs then
+    for i = 1, #childs do
+        callback(childs[i])
+    end
+end
+]]):format(key)
+        elseif type(def) == 'string' then
+            text[#text+1] = ('callback(obj.%s)'):format(def)
+        else
+            text[#text+1] = ('callback(obj[%q])'):format(def)
+        end
+    end
+    local buf = table.concat(text, '\n')
+    local f = load(buf, buf, 't')
+    self[name] = f
+    return f
+end})
+
 m.actionMap = {
     ['main']        = {'#'},
     ['repeat']      = {'#'},
@@ -236,7 +277,7 @@ local function formatNumber(n)
 end
 
 --- 是否是字面量
----@param obj parser.object
+---@param obj table
 ---@return boolean
 function m.isLiteral(obj)
     local tp = obj.type
@@ -252,6 +293,8 @@ function m.isLiteral(obj)
         or tp == 'doc.type.string'
         or tp == 'doc.type.integer'
         or tp == 'doc.type.boolean'
+        or tp == 'doc.type.code'
+        or tp == 'doc.type.array'
 end
 
 --- 获取字面量
@@ -273,7 +316,7 @@ end
 
 --- 寻找父函数
 ---@param obj parser.object
----@return parser.object
+---@return parser.object?
 function m.getParentFunction(obj)
     for _ = 1, 10000 do
         obj = obj.parent
@@ -290,7 +333,7 @@ end
 
 --- 寻找所在区块
 ---@param obj parser.object
----@return parser.object
+---@return parser.object?
 function m.getBlock(obj)
     for _ = 1, 10000 do
         if not obj then
@@ -319,7 +362,7 @@ end
 
 --- 寻找所在父区块
 ---@param obj parser.object
----@return parser.object
+---@return parser.object?
 function m.getParentBlock(obj)
     for _ = 1, 10000 do
         obj = obj.parent
@@ -336,7 +379,7 @@ end
 
 --- 寻找所在可break的父区块
 ---@param obj parser.object
----@return parser.object
+---@return parser.object?
 function m.getBreakBlock(obj)
     for _ = 1, 10000 do
         obj = obj.parent
@@ -373,7 +416,7 @@ end
 
 --- 寻找所在父类型
 ---@param obj parser.object
----@return parser.object
+---@return parser.object?
 function m.getParentType(obj, want)
     for _ = 1, 10000 do
         obj = obj.parent
@@ -406,8 +449,7 @@ function m.getRoot(obj)
         end
         local parent = obj.parent
         if not parent then
-            log.error('Can not find out root:', obj.type)
-            return nil
+            error('Can not find out root:' .. tostring(obj.type))
         end
         obj = parent
     end
@@ -436,56 +478,54 @@ function m.getENV(source, start)
         or m.getLocal(source, '@fenv', start)
 end
 
---- 寻找函数的不定参数，返回不定参在第几个参数上，以及该参数对象。
---- 如果函数是主函数，则返回`0, nil`。
----@return table
----@return integer
-function m.getFunctionVarArgs(func)
-    if func.type == 'main' then
-        return 0, nil
-    end
-    if func.type ~= 'function' then
-        return nil, nil
-    end
-    local args = func.args
-    if not args then
-        return nil, nil
-    end
-    for i = 1, #args do
-        local arg = args[i]
-        if arg.type == '...' then
-            return i, arg
-        end
-    end
-    return nil, nil
-end
-
 --- 获取指定区块中可见的局部变量
 ---@param source parser.object
 ---@param name string # 变量名
 ---@param pos integer # 可见位置
 ---@return parser.object?
 function m.getLocal(source, name, pos)
-    local root = m.getRoot(source)
-    local res
-    m.eachSourceContain(root, pos, function (src)
-        local locals = src.locals
-        if not locals then
-            return
+    local block = source
+    -- find nearest source
+    for _ = 1, 10000 do
+        if not block then
+            return nil
         end
-        for i = 1, #locals do
-            local loc = locals[i]
-            if loc.effect > pos then
-                break
-            end
-            if loc[1] == name then
-                if not res or res.effect < loc.effect then
-                    res = loc
+        if  block.start <= pos
+        and block.finish >= pos
+        and blockTypes[block.type] then
+            break
+        end
+        block = block.parent
+    end
+
+    m.eachSourceContain(block, pos, function (src)
+        if  blockTypes[src.type]
+        and (src.finish - src.start) < (block.finish - src.start) then
+            block = src
+        end
+    end)
+
+    for _ = 1, 10000 do
+        if not block then
+            break
+        end
+        local res
+        if block.locals then
+            for _, loc in ipairs(block.locals) do
+                if  loc[1] == name
+                and loc.effect <= pos then
+                    if not res or res.effect < loc.effect then
+                        res = loc
+                    end
                 end
             end
         end
-    end)
-    return res
+        if res then
+            return res
+        end
+        block = block.parent
+    end
+    return nil
 end
 
 --- 获取指定区块中所有的可见局部变量名称
@@ -507,25 +547,25 @@ function m.getVisibleLocals(block, pos)
 end
 
 --- 获取指定区块中可见的标签
----@param block table
----@param name string {comment = '标签名'}
+---@param block parser.object
+---@param name string
 function m.getLabel(block, name)
-    block = m.getBlock(block)
+    local current = m.getBlock(block)
     for _ = 1, 10000 do
-        if not block then
+        if not current then
             return nil
         end
-        local labels = block.labels
+        local labels = current.labels
         if labels then
             local label = labels[name]
             if label then
                 return label
             end
         end
-        if block.type == 'function' then
+        if current.type == 'function' then
             return nil
         end
-        block = m.getParentBlock(block)
+        current = m.getParentBlock(current)
     end
     error('guide.getLocal overstack')
 end
@@ -749,6 +789,16 @@ function m.eachSource(ast, callback)
     end
 end
 
+---@param source   parser.object
+---@param callback fun(src: parser.object)
+function m.eachChild(source, callback)
+    local f = eachChildMap[source.type]
+    if not f then
+        return
+    end
+    f(source, callback)
+end
+
 --- 获取指定的 special
 function m.eachSpecialOf(ast, name, callback)
     local root = m.getRoot(ast)
@@ -797,6 +847,8 @@ function m.positionToOffset(state, position)
     return m.positionToOffsetByLines(state.lines, position)
 end
 
+---@param lines integer[]
+---@param offset integer
 function m.offsetToPositionByLines(lines, offset)
     local left  = 0
     local right = #lines
@@ -859,6 +911,7 @@ local isSetMap = {
     ['doc.alias.name']    = true,
     ['doc.field.name']    = true,
     ['doc.type.field']    = true,
+    ['doc.type.array']    = true,
 }
 function m.isSet(source)
     local tp = source.type
@@ -1058,9 +1111,9 @@ end
 --- 返回的2个 `list` 分别为基准block到达 a 与 b 的路径。
 ---@param a table
 ---@param b table
----@return string|boolean mode
----@return table pathA?
----@return table pathB?
+---@return string|false mode
+---@return table? pathA
+---@return table? pathB
 function m.getPath(a, b, sameFunction)
     --- 首先测试双方在同一个函数内
     if sameFunction and m.getParentFunction(a) ~= m.getParentFunction(b) then
@@ -1084,16 +1137,20 @@ function m.getPath(a, b, sameFunction)
     local pathB = {}
     for _ = 1, 1000 do
         objA = m.getParentBlock(objA)
-        pathA[#pathA+1] = objA
-        if (not sameFunction and objA.type == 'function') or objA.type == 'main' then
-            break
+        if objA then
+            pathA[#pathA+1] = objA
+            if (not sameFunction and objA.type == 'function') or objA.type == 'main' then
+                break
+            end
         end
     end
     for _ = 1, 1000 do
         objB = m.getParentBlock(objB)
-        pathB[#pathB+1] = objB
-        if (not sameFunction and objA.type == 'function') or objB.type == 'main' then
-            break
+        if objB then
+            pathB[#pathB+1] = objB
+            if (not sameFunction and objB.type == 'function') or objB.type == 'main' then
+                break
+            end
         end
     end
     -- pathA: {1, 2, 3, 4, 5}
@@ -1108,7 +1165,7 @@ function m.getPath(a, b, sameFunction)
         end
     end
     if not start then
-        return nil
+        return false
     end
     -- pathA: {   1, 2, 3}
     -- pathB: {5, 6, 2, 3}
@@ -1201,6 +1258,15 @@ function m.isInString(ast, position)
     end)
 end
 
+function m.isInComment(ast, offset)
+    for _, com in ipairs(ast.state.comms) do
+        if offset >= com.start and offset <= com.finish then
+            return true
+        end
+    end
+    return false
+end
+
 function m.isOOP(source)
     if source.type == 'setmethod'
     or source.type == 'getmethod' then
@@ -1221,6 +1287,7 @@ local basicTypeMap = {
     ['false']    = true,
     ['nil']      = true,
     ['boolean']  = true,
+    ['integer']  = true,
     ['number']   = true,
     ['string']   = true,
     ['table']    = true,
@@ -1233,6 +1300,12 @@ local basicTypeMap = {
 ---@return boolean
 function m.isBasicType(str)
     return basicTypeMap[str] == true
+end
+
+---@param source parser.object
+---@return boolean
+function m.isBlockType(source)
+    return blockTypes[source.type] == true
 end
 
 return m

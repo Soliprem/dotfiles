@@ -2,7 +2,7 @@
  * @name ImageUtilities
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 4.7.6
+ * @version 4.7.9
  * @description Adds several Utilities for Images/Videos (Gallery, Download, Reverse Search, Zoom, Copy, etc.)
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -17,7 +17,7 @@ module.exports = (_ => {
 		"info": {
 			"name": "ImageUtilities",
 			"author": "DevilBro",
-			"version": "4.7.6",
+			"version": "4.7.9",
 			"description": "Adds several Utilities for Images/Videos (Gallery, Download, Reverse Search, Zoom, Copy, etc.)"
 		}
 	};
@@ -123,7 +123,10 @@ module.exports = (_ => {
 				}
 				return BDFDB.ReactUtils.createElement("div", {
 					className: BDFDB.DOMUtils.formatClassName(BDFDB.disCN._imageutilitiessibling, this.props.className),
-					onClick: _ => _this.switchImages(this.props.modalInstance, this.props.offset),
+					onClick: event => {
+						BDFDB.ListenerUtils.stopEvent(event);
+						_this.switchImages(this.props.modalInstance, this.props.offset);
+					},
 					children: [
 						this.props.loadedImage || BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.Spinner, {
 							type: BDFDB.LibraryComponents.Spinner.Type.SPINNING_CIRCLE
@@ -303,6 +306,10 @@ module.exports = (_ => {
 						align-items: center;
 						min-width: 500px;
 					}
+					${BDFDB.dotCNS.imagemodal + BDFDB.notCN._imageutilitiessibling} > ${BDFDB.dotCN.imagewrapper} img {
+						object-fit: contain;
+						width: unset;
+					}
 					${BDFDB.dotCN._imageutilitiessibling} {
 						display: flex;
 						align-items: center;
@@ -343,6 +350,9 @@ module.exports = (_ => {
 					}
 					${BDFDB.dotCN._imageutilitiessibling}:hover ${BDFDB.dotCN._imageutilitiesswitchicon} {
 						background: rgba(0, 0, 0, 0.5);
+					}
+					${BDFDB.dotCNS._imageutilitiesgallery + BDFDB.dotCN.imagemodalnavbutton} {
+						display: none;
 					}
 					${BDFDB.dotCN._imageutilitiesdetailswrapper} {
 						position: fixed;
@@ -687,8 +697,27 @@ module.exports = (_ => {
 			}
 
 			onGroupDMContextMenu (e) {
-				if (e.instance.props.channel && e.instance.props.channel.isGroupDM() && this.settings.places.groupIcons) this.injectItem(e, [(BDFDB.DMUtils.getIcon(e.instance.props.channel.id) || "").replace(/\.webp|\.gif/, ".png")]);
+				if (e.instance.props.channel && e.instance.props.channel.isGroupDM() && this.settings.places.groupIcons) this.injectItem(e, );
 			}
+
+			onChannelContextMenu (e) {
+				if (e.instance.props.channel && e.instance.props.channel.isGroupDM() && this.settings.places.groupIcons && e.subType == "useChannelLeaveItem") {
+					let validUrls = this.filterUrls((BDFDB.DMUtils.getIcon(e.instance.props.channel.id) || "").replace(/\.webp|\.gif/, ".png"));
+					if (!validUrls.length) return;
+					
+					if (e.returnvalue.length) e.returnvalue.unshift(BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuSeparator, {}));
+					e.returnvalue.unshift(BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuItem, {
+						label: this.isValid(validUrls[0].file, "video") ? BDFDB.LanguageUtils.LanguageStrings.VIDEO : BDFDB.LanguageUtils.LanguageStrings.IMAGE + " " + BDFDB.LanguageUtils.LanguageStrings.ACTIONS,
+						id: BDFDB.ContextMenuUtils.createItemId(this.name, "main-subitem"),
+						children: this.createSubMenus({
+							instance: e.instance,
+							urls: validUrls,
+							prefix: BDFDB.LanguageUtils.LanguageStrings.USER_SETTINGS_AVATAR
+						})
+					}));
+				}
+			}
+
 
 			onNativeContextMenu (e) {
 				if (e.type == "NativeImageContextMenu" && (e.instance.props.href || e.instance.props.src)) this.injectItem(e, [e.instance.props.href || e.instance.props.src]);
@@ -1545,7 +1574,8 @@ module.exports = (_ => {
 					height: videoData.size.height,
 					naturalWidth: viewedImage.width,
 					naturalHeight: viewedImage.height,
-					play: true
+					play: true,
+					playOnHover: !!BDFDB.LibraryModules.LocalSettingsStore.useReducedMotion
 				}));
 				BDFDB.ReactUtils.forceUpdate(modalInstance);
 			}

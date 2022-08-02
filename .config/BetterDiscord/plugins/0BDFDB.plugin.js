@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.4.2
+ * @version 2.4.8
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -19,7 +19,7 @@ module.exports = (_ => {
 		"info": {
 			"name": "BDFDB",
 			"author": "DevilBro",
-			"version": "2.4.2",
+			"version": "2.4.8",
 			"description": "Required Library for DevilBro's Plugins"
 		},
 		"rawUrl": "https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js"
@@ -3302,10 +3302,10 @@ module.exports = (_ => {
 		BDFDB.GuildUtils.openMenu = function (guild, e = mousePosition) {
 			if (!guild) return;
 			e = BDFDB.ListenerUtils.copyEvent(e.nativeEvent || e, (e.nativeEvent || e).currentTarget);
-			let menu = BDFDB.ModuleUtils.findByName("GuildContextMenu", false, true);
+			let menu = BDFDB.ModuleUtils.findByName("GuildContextMenuWrapper", false, true);
 			if (menu) Internal.LibraryModules.ContextMenuUtils.openContextMenu(e, e2 => BDFDB.ReactUtils.createElement(menu.exports.default, Object.assign({}, e2, {guild})));
 			else Internal.lazyLoadModuleImports(BDFDB.ModuleUtils.findByString("renderUnavailableBadge", "guild:", "openContextMenu")).then(_ => {
-				menu = BDFDB.ModuleUtils.findByName("GuildContextMenu", false);
+				menu = BDFDB.ModuleUtils.findByName("GuildContextMenuWrapper", false);
 				if (menu) Internal.LibraryModules.ContextMenuUtils.openContextMenu(e, e2 => BDFDB.ReactUtils.createElement(menu.exports.default, Object.assign({}, e2, {guild})));
 			});
 		};
@@ -4556,6 +4556,7 @@ module.exports = (_ => {
 			}
 		});
 		BDFDB.DiscordClassModules = Internal.DiscordClassModules;
+		for (let item in InternalData.DiscordClassModules) if (!DiscordClassModules[item]) DiscordClassModules[item] = undefined;
 		
 		const DiscordClasses = Object.assign({}, InternalData.DiscordClasses);
 		BDFDB.DiscordClasses = Object.assign({}, DiscordClasses);
@@ -4597,50 +4598,50 @@ module.exports = (_ => {
 			while (id.length < 6) id += generationChars[Math.floor(Math.random() * generationChars.length)];
 			return id;
 		};
-		BDFDB.disCN = new Proxy(DiscordClasses, {
+		BDFDB.disCN = new Proxy({}, {
 			get: function (list, item) {
 				return Internal.getDiscordClass(item, false).replace("#", "");
 			}
 		});
-		BDFDB.disCNS = new Proxy(DiscordClasses, {
+		BDFDB.disCNS = new Proxy({}, {
 			get: function (list, item) {
 				return Internal.getDiscordClass(item, false).replace("#", "") + " ";
 			}
 		});
-		BDFDB.disCNC = new Proxy(DiscordClasses, {
+		BDFDB.disCNC = new Proxy({}, {
 			get: function (list, item) {
 				return Internal.getDiscordClass(item, false).replace("#", "") + ",";
 			}
 		});
-		BDFDB.dotCN = new Proxy(DiscordClasses, {
+		BDFDB.dotCN = new Proxy({}, {
 			get: function (list, item) {
 				let className = Internal.getDiscordClass(item, true);
 				return (className.indexOf("#") == 0 ? "" : ".") + className;
 			}
 		});
-		BDFDB.dotCNS = new Proxy(DiscordClasses, {
+		BDFDB.dotCNS = new Proxy({}, {
 			get: function (list, item) {
 				let className = Internal.getDiscordClass(item, true);
 				return (className.indexOf("#") == 0 ? "" : ".") + className + " ";
 			}
 		});
-		BDFDB.dotCNC = new Proxy(DiscordClasses, {
+		BDFDB.dotCNC = new Proxy({}, {
 			get: function (list, item) {
 				let className = Internal.getDiscordClass(item, true);
 				return (className.indexOf("#") == 0 ? "" : ".") + className + ",";
 			}
 		});
-		BDFDB.notCN = new Proxy(DiscordClasses, {
+		BDFDB.notCN = new Proxy({}, {
 			get: function (list, item) {
 				return `:not(.${Internal.getDiscordClass(item, true).split(".")[0]})`;
 			}
 		});
-		BDFDB.notCNS = new Proxy(DiscordClasses, {
+		BDFDB.notCNS = new Proxy({}, {
 			get: function (list, item) {
 				return `:not(.${Internal.getDiscordClass(item, true).split(".")[0]}) `;
 			}
 		});
-		BDFDB.notCNC = new Proxy(DiscordClasses, {
+		BDFDB.notCNC = new Proxy({}, {
 			get: function (list, item) {
 				return `:not(.${Internal.getDiscordClass(item, true).split(".")[0]}),`;
 			}
@@ -6609,8 +6610,11 @@ module.exports = (_ => {
 						onContextMenu: this.handleContextMenu.bind(this),
 						children: [
 							!this.props.noCircle ? BDFDB.ReactUtils.createElement("div", {
-								className: BDFDB.disCN.userpopoutrolecircle,
-								style: {backgroundColor: color}
+								className: BDFDB.disCN.userpopoutroleremovebutton,
+								children: BDFDB.ReactUtils.createElement("span", {
+									className: BDFDB.disCN.userpopoutrolecircle,
+									style: {backgroundColor: color}
+								})
 							}) : null,
 							BDFDB.ReactUtils.createElement("div", {
 								className: BDFDB.disCN.userpopoutrolename,
@@ -8020,6 +8024,7 @@ module.exports = (_ => {
 					muted: true,
 					loop: true,
 					autoPlay: props.play,
+					playOnHover: props.playOnHover,
 					preload: "none"
 				}) : BDFDB.ReactUtils.createElement("img", {
 					alt: "",
@@ -8174,6 +8179,7 @@ module.exports = (_ => {
 			
 			Internal.patchedModules = {
 				before: {
+					UserBanner: "default",
 					SearchBar: "render",
 					EmojiPicker: "type",
 					EmojiPickerListRow: "default"
@@ -8210,17 +8216,15 @@ module.exports = (_ => {
 							if (count > 20) return BDFDB.TimeUtils.clear(interval);
 							else {
 								let module = BDFDB.ModuleUtils.findByString("guild-header-popout");
-								if (module) BDFDB.PatchUtils.patch(BDFDB, module.default.prototype, "render", {after: e2 => {
-									BDFDB.PatchUtils.patch(BDFDB, e2.returnValue.type, "type", {after: e3 => {
-										Internal.triggerQueuePatch("GuildHeaderContextMenu", {
-											arguments: e3.methodArguments,
-											instance: {props: e3.methodArguments[0]},
-											returnvalue: e3.returnValue,
-											component: e2.returnValue,
-											methodname: "type",
-											type: "GuildHeaderContextMenu"
-										});
-									}}, {noCache: true});
+								if (module) BDFDB.PatchUtils.patch(BDFDB, module, "type", {after: e2 => {
+									Internal.triggerQueuePatch("GuildHeaderContextMenu", {
+										arguments: e2.methodArguments,
+										instance: {props: e2.methodArguments[0]},
+										returnvalue: e2.returnValue,
+										component: e.returnValue,
+										methodname: "type",
+										type: "GuildHeaderContextMenu"
+									});
 								}});
 							}
 						}, 500);
@@ -8236,7 +8240,7 @@ module.exports = (_ => {
 			Internal.processSettingsView = function (e) {
 				if (e.node && e.node.parentElement && e.node.parentElement) Internal.addListObserver(e.node.parentElement);
 			};
-		
+			
 			let AppViewExport = InternalData.ModuleUtilsConfig.Finder.AppView && BDFDB.ModuleUtils.findByString(InternalData.ModuleUtilsConfig.Finder.AppView.strings, false);
 			if (AppViewExport) Internal.processShakeable = function (e) {
 				let [children, index] = BDFDB.ReactUtils.findParent(e.returnvalue, {filter: n => {
@@ -8245,6 +8249,10 @@ module.exports = (_ => {
 					return [InternalData.ModuleUtilsConfig.Finder.AppView.strings].flat(10).filter(n => typeof n == "string").every(string => typeString.indexOf(string) > -1);
 				}});
 				if (index > -1) children[index] = BDFDB.ReactUtils.createElement(AppViewExport.exports.default, children[index].props);
+			};
+			
+			Internal.processUserBanner = function (e) {
+				if (e.instance.props.bannerSrc && e.instance.props.user && e.instance.props.bannerSrc.indexOf(`/${e.instance.props.user.id}/http`) > -1) e.instance.props.bannerSrc = `http${e.instance.props.bannerSrc.split(`/${e.instance.props.user.id}/http`)[1].replace(/\.png\?size=[\d]*$/g, "")}`;
 			};
 			
 			Internal.processMessage = function (e) {
@@ -8578,7 +8586,6 @@ module.exports = (_ => {
 								}
 							}
 							while (removedTypes.length) delete PluginStores.chunkObserver[removedTypes.pop()];
-							
 							let found = false, funcString = exports && exports.default && typeof exports.default == "function" && exports.default.toString();
 							if (funcString && funcString.indexOf(".page") > -1 && funcString.indexOf(".section") > -1 && funcString.indexOf(".objectType") > -1) {
 								const returnValue = exports.default({});
@@ -8640,7 +8647,7 @@ module.exports = (_ => {
 					if (!InternalData.ModuleUtilsConfig.ContextMenuSubItemsMap[mappedType]) PluginStores.contextChunkObserver[type].filter = m => {
 						if (!m || !(m.default || m.type)) return;
 						const d = m.default || m.type;
-						if (d.displayName && d.displayName.endsWith("ContextMenu") && `${InternalData.ModuleUtilsConfig.ContextMenuTypes.find(t => d.displayName.indexOf(t) > -1)}ContextMenu` == type) {
+						if (d.displayName && (d.displayName.endsWith("ContextMenu") || d.displayName.endsWith("ContextMenuWrapper")) && `${InternalData.ModuleUtilsConfig.ContextMenuTypes.find(t => d.displayName.indexOf(t) > -1)}ContextMenu` == type) {
 							m.__BDFDB_ContextMenu_Patch_Name = type;
 							return true;
 						}

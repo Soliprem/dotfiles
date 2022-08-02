@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 	<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 		<Metadata>
-			<Identity Language="en-US" Id="lua" Version="3.2.3" Publisher="sumneko" TargetPlatform="linux-x64"/>
+			<Identity Language="en-US" Id="lua" Version="3.4.2" Publisher="sumneko" TargetPlatform="linux-x64"/>
 			<DisplayName>Lua</DisplayName>
 			<Description xml:space="preserve">Lua Language Server coded by Lua</Description>
-			<Tags>Lua,IntelliSense,EmmyLua,json,jsonc,lua</Tags>
+			<Tags>Lua,IntelliSense,EmmyLua,json,jsonc,lua,__sponsor_extension</Tags>
 			<Categories>Linters,Programming Languages,Snippets</Categories>
 			<GalleryFlags>Public</GalleryFlags>
 			
 			<Properties>
-				<Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.61.0" />
+				<Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.67.0" />
 				<Property Id="Microsoft.VisualStudio.Code.ExtensionDependencies" Value="" />
 				<Property Id="Microsoft.VisualStudio.Code.ExtensionPack" Value="" />
 				<Property Id="Microsoft.VisualStudio.Code.ExtensionKind" Value="workspace" />
 				<Property Id="Microsoft.VisualStudio.Code.LocalizedLanguages" Value="" />
 				
+				<Property Id="Microsoft.VisualStudio.Code.SponsorLink" Value="https://github.com/sumneko/lua-language-server/issues/484" />
 				<Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://github.com/sumneko/lua-language-server.git" />
 				<Property Id="Microsoft.VisualStudio.Services.Links.Getstarted" Value="https://github.com/sumneko/lua-language-server.git" />
 				<Property Id="Microsoft.VisualStudio.Services.Links.GitHub" Value="https://github.com/sumneko/lua-language-server.git" />
