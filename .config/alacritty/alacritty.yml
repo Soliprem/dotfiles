@@ -175,7 +175,7 @@ colors:
     cyan: '#689d6a'
     white: '#a89984'
 
-  # Bright colors
+  # # Bright colors
   bright:
     black: '#928374'
     red: '#fb4934'
@@ -185,6 +185,30 @@ colors:
     magenta: '#d3869b'
     cyan: '#8ec07c'
     white: '#ebdbb2'
+
+  # primary:
+  #   backgroun: '#282c34'
+  #   foreground: '#b8bfcc'
+  # normal:
+  #   black: '#282c34'
+  #   red: '#e06c75'
+  #   green: '#98c379'
+  #   yellow: '#e5c07b'
+  #   blue: '#61afef'
+  #   magenta: '#c678dd'
+  #   cyan: '#56b6c2'
+  #   white: '#abb2bf'
+  #
+  # bright:
+  #   black: '#353941'
+  #   red: '#ED7982'
+  #   green: '#A5D086'
+  #   yellow: '#F2CD88'
+  #   blue: '#6EBCFC'
+  #   magenta: '#D384EA'
+  #   cyan: '#63C3CF'
+  #   white: '#B8BFCC'
+
 # theme: One-Dark
 
 # theme: Gruvbox-Dark

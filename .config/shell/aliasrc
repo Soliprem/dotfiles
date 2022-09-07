@@ -41,6 +41,7 @@ alias \
 # These common commands are just too long! Abbreviate them.
 alias \
 	ka="killall" \
+	s="sxiv" \
 	g="git" \
 	trem="transmission-remote" \
 	YT="youtube-viewer" \

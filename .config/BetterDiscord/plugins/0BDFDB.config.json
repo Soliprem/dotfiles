@@ -3,7 +3,8 @@
 		"changeLogs": {
 			"BDFDB": "2.2.4",
 			"EmojiStatistics": "2.9.8",
-			"ImageUtilities": "4.7.4"
+			"ImageUtilities": "4.8.5",
+			"ThemeSettings": "1.3.5"
 		},
 		"choices": {
 			"toastPosition": "right"
@@ -15,8 +16,8 @@
 			"useChromium": false
 		},
 		"hashes": {
-			"0BDFDB.data.json": "bdcd44ac0b1f4892103522ebf8206e5f239df36b",
-			"0BDFDB.raw.css": "96fb638350f77c79c3648050d58a0ea7a700ea1b"
+			"0BDFDB.data.json": "663af413aed88cba5057c16b73955175779e0d53",
+			"0BDFDB.raw.css": "98e9c027ef6e97326ac142859216e2f96c20ac4d"
 		}
 	}
 }

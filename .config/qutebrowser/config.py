@@ -186,11 +186,12 @@ c.downloads.location.directory = '~/Downloads'
 #   - never: Always hide the tab bar.
 #   - multiple: Hide the tab bar if only one tab is open.
 #   - switching: Show the tab bar when switching tabs.
-c.tabs.show = 'always'
+c.tabs.show = 'switching'
 
 # Setting default page for when opening new tabs or new windows with
 # commands like :open -t and :open -w .
 # c.url.default_page = 'https://www.qwant.com/?q=&t=web'
+# c.url.default_page = '~/.config/homepage/homepage.html'
 c.url.default_page = '~/.config/homepage/homepage.html'
 # c.url.start_pages = 'https://www.qwant.com/?q=&t=web'
 c.url.start_pages = '~/.config/homepage/homepage.html'
